@@ -10,9 +10,12 @@ jobs:
     runs-on: self-hosted
 
     steps:
-      - name: Deploy with docker-compose
+      - name: Login to GHCR
+        run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
+
+      - name: Deploy
         run: |
           cd /home/cybersecurity/Desktop/week3
-          docker-compose pull
-          docker-compose down
-          docker-compose up -d
+          docker compose pull
+          docker compose down
+          docker compose up -d
