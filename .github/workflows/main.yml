@@ -6,48 +6,35 @@ on:
       - main
 
 jobs:
-
-  build-and-push:
-    runs-on: ubuntu-latest
-    permissions:
-      contents: read
-      packages: write
-
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-
-      - name: Log in to GHCR
-        uses: docker/login-action@v3
-        with:
-          registry: ghcr.io
-          username: ${{ github.actor }}
-          password: ${{ secrets.GITHUB_TOKEN }}
-
-      # Build and Push Backend
-      - name: Build and push Backend Image
-        uses: docker/build-push-action@v5
-        with:
-          context: ./backend
-          push: true
-          tags: ghcr.io/${{ github.repository_owner }}/week3-backend:latest
-
-      # Build and Push Frontend
-      - name: Build and push Frontend Image
-        uses: docker/build-push-action@v5
-        with:
-          context: ./frontend
-          push: true
-          tags: ghcr.io/${{ github.repository_owner }}/week3-frontend:latest
-  deploy:
+  build:
     runs-on: self-hosted
 
     steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
       - name: Login to GHCR
-        run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
+        run: echo "${{ secrets.PUBLIC2 }}" | docker login ghcr.io -u shatha163 --password-stdin
+
+      - name: Build image
+        run: |
+          docker build -t ghcr.io/shatha163/week3:latest .
+
+      - name: Push image
+        run: |
+          docker push ghcr.io/shatha163/week3:latest
+
+  deploy:
+    runs-on: self-hosted
+    needs: build
+
+    steps:
+      - name: Login to GHCR
+        run: echo "${{ secrets.PUBLIC2 }}" | docker login ghcr.io -u shatha163 --password-stdin
 
       - name: Deploy
         run: |
           cd /home/cybersecurity/Desktop/week3
+          docker compose pull
           docker compose down
           docker compose up -d
