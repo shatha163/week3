@@ -6,6 +6,39 @@ on:
       - main
 
 jobs:
+
+  build-and-push:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Log in to GHCR
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      # Build and Push Backend
+      - name: Build and push Backend Image
+        uses: docker/build-push-action@v5
+        with:
+          context: ./backend
+          push: true
+          tags: ghcr.io/${{ github.repository_owner }}/week3-backend:latest
+
+      # Build and Push Frontend
+      - name: Build and push Frontend Image
+        uses: docker/build-push-action@v5
+        with:
+          context: ./frontend
+          push: true
+          tags: ghcr.io/${{ github.repository_owner }}/week3-frontend:latest
   deploy:
     runs-on: self-hosted
 
@@ -16,6 +49,5 @@ jobs:
       - name: Deploy
         run: |
           cd /home/cybersecurity/Desktop/week3
-          docker compose pull
           docker compose down
           docker compose up -d
