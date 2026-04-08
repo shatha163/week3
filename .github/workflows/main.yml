@@ -43,6 +43,5 @@ jobs:
       - name: Deploy
         run: |
           cd /home/cybersecurity/Desktop/week3
-          docker compose down --remove-orphans
-          docker rm -f postgres_db || true
+          docker compose down 
           docker compose up -d
