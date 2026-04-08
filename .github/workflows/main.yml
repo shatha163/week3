@@ -23,6 +23,14 @@ jobs:
       - name: Push image
         run: |
           docker push ghcr.io/shatha163/week3:latest
+          
+      - name: Build frontend image
+        run: |
+          docker build -t ghcr.io/shatha163/week3-templates:latest ./templates
+
+      - name: Push frontend image
+        run: |
+          docker push ghcr.io/shatha163/week3-templates:latest
 
   deploy:
     runs-on: self-hosted
