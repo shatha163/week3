@@ -44,10 +44,10 @@ jobs:
         uses: appleboy/ssh-action@v1.0.3
         with:
          host: ${{ secrets.SERVER_IP }}
-         username: root
+         username: cybersecurity
          key: ${{ secrets.PUBLIC2 }}
          script: |
-          cd /root/jamal-docker-app
+          cd /home/cybersecurity/Desktop/week3
           
       - name: Login to GHCR
         run: echo "${{ secrets.PUBLIC2 }}" | docker login ghcr.io -u shatha163 --password-stdin
