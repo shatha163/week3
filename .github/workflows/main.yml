@@ -46,7 +46,7 @@ jobs:
       - name: Deploy to Docker
         run: |
           # 1. Move to your project directory
-          cd /home/cybersecurity/Desktop/week3
+          cd /home/cybersecurity/week3
           
           
           
