@@ -11,7 +11,7 @@ jobs:
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v3
 
       - name: Login to GHCR
         run: echo "${{ secrets.PUBLIC2 }}" | docker login ghcr.io -u shatha163 --password-stdin
@@ -38,7 +38,7 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4  # Updated to v4 to fix the Node.js warning
+        uses: actions/checkout@v3  # Updated to v4 to fix the Node.js warning
 
       - name: Login to GHCR
         run: echo "${{ secrets.PUBLIC2 }}" | docker login ghcr.io -u shatha163 --password-stdin
@@ -48,8 +48,7 @@ jobs:
           # 1. Move to your project directory
           cd /home/cybersecurity/Desktop/week3
           
-          # 2. Pull the fresh images you just built in the 'build' job
-          docker compose pull
+          
           
           # 3. Restart the containers
           docker compose down 
