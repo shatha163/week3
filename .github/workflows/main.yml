@@ -48,7 +48,7 @@ jobs:
           # 1. Move to your project directory
           cd /home/cybersecurity/week3
           
-          .\vault-secret.sh
+          ./vault-secret.sh
           
           # 3. Restart the containers
           docker compose down 
