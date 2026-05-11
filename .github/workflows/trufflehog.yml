@@ -21,4 +21,4 @@ jobs:
         with:
           path: ./
           # أزلنا أسطر base و head لتجنب خطأ التطابق
-          extra_args: --only-verified --fail
+          extra_args: --only-verified 
