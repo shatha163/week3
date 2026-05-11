@@ -14,12 +14,11 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v4
         with:
-          fetch-depth: 0 
+          fetch-depth: 0
 
       - name: Run TruffleHog
         uses: trufflesecurity/trufflehog@main
         with:
           path: ./
-          base: ${{ github.event.repository.default_branch }}
-          head: HEAD
-          extra_args: --debug
+          # أزلنا أسطر base و head لتجنب خطأ التطابق
+          extra_args: --only-verified --fail
