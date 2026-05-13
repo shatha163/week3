@@ -23,10 +23,10 @@ jobs:
           extra_args: --only-verified 
 
       - name: Run Bandit
+        continue-on-error: true
         run: |
           pip install bandit
           bandit -r . -f txt
-          continue-on-error: true
           
       - name: Run Hadolint
         uses: hadolint/hadolint-action@v3.1.0
