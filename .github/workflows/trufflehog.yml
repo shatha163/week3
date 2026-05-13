@@ -20,5 +20,14 @@ jobs:
         uses: trufflesecurity/trufflehog@main
         with:
           path: ./
-          # أزلنا أسطر base و head لتجنب خطأ التطابق
           extra_args: --only-verified 
+
+      - name: Run Bandit
+        run: |
+          pip install bandit
+          bandit -r . -f txt
+          
+      - name: Run Hadolint
+        uses: hadolint/hadolint-action@v3.1.0
+        with:
+          recursive: true
